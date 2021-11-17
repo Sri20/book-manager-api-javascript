@@ -6,7 +6,12 @@ router.get('/books', booksController.getBooks);
 router.get('/books/:bookId', booksController.getBook);
 router.post('/books', booksController.saveBook);
 
+
 // User Story 4 - Update Book By Id Solution
 router.put('/books/:bookId', booksController.updateBook);
+
+//User story 5 - delete book by Id 
+
+router.delete('/books/:bookId', booksController.deleteBook);
 
 module.exports = router;

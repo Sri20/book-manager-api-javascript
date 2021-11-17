@@ -110,9 +110,20 @@ describe('POST /api/v1/books endpoint', () => {
 
 describe('PUT /api/v1/books/{bookid} endpoint', () => {
   test('status code successfully 200 for updating a valid book', async () => {
+  
     // Act
-    const res = await request(app).put('/api/v1/books')
-    .send({bookId: 2, title: 'Fantastic Mr. Fox', author: 'Roald Dahl',});
+    const res = await request(app).put('/api/v1/books/3')
+    .send({bookId: 3, title: 'Fantastic Mr. Fox', author: 'Roald Dahl',});
+    // Assert
+    expect(res.statusCode).toEqual(200);
+  });
+});
+
+describe('DELETE /api/v1/books/{bookid} endpoint', () => {
+  test('status code successfully 200 for deleting a valid book', async () => {
+  
+    // Act
+    const res = await request(app).delete('/api/v1/books/3');
     // Assert
     expect(res.statusCode).toEqual(200);
   });
