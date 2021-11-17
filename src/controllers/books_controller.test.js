@@ -107,3 +107,13 @@ describe('POST /api/v1/books endpoint', () => {
     expect(res.statusCode).toEqual(400);
   });
 });
+
+describe('PUT /api/v1/books/{bookid} endpoint', () => {
+  test('status code successfully 200 for updating a valid book', async () => {
+    // Act
+    const res = await request(app).put('/api/v1/books')
+    .send({bookId: 2, title: 'Fantastic Mr. Fox', author: 'Roald Dahl',});
+    // Assert
+    expect(res.statusCode).toEqual(200);
+  });
+});
