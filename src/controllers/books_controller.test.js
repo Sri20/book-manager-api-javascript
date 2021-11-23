@@ -102,7 +102,6 @@ describe('POST /api/v1/books endpoint', () => {
     // Act
     const res = await request(app).post('/api/v1/books')
       .send({title: 'Fantastic Mr. Fox', author: 'Roald Dahl',}); // No bookId
-
     // Assert
     expect(res.statusCode).toEqual(400);
   });
@@ -110,7 +109,8 @@ describe('POST /api/v1/books endpoint', () => {
 
 describe('PUT /api/v1/books/{bookid} endpoint', () => {
   test('status code successfully 200 for updating a valid book', async () => {
-  
+    // Arrange
+    bookService.updateBook = jest.fn().mockReturnValue(dummyBookData[1]) 
     // Act
     const res = await request(app).put('/api/v1/books/3')
     .send({bookId: 3, title: 'Fantastic Mr. Fox', author: 'Roald Dahl',});
@@ -119,12 +119,26 @@ describe('PUT /api/v1/books/{bookid} endpoint', () => {
   });
 });
 
+
+
 describe('DELETE /api/v1/books/{bookid} endpoint', () => {
   test('status code successfully 200 for deleting a valid book', async () => {
-  
+    // Arrange
+    bookService.deleteBook = jest.fn().mockReturnValue(dummyBookData[1])
     // Act
-    const res = await request(app).delete('/api/v1/books/3');
+    const res = await request(app).delete('/api/v1/books/1');
     // Assert
     expect(res.statusCode).toEqual(200);
+  });
+});
+
+describe('DELETE /api/v1/books/{bookid} endpoint', () => {
+  test('status code 404 when deleting non existent record', async () => {
+    // Arrange
+   bookService.deleteBook = jest.fn().mockReturnValue()
+    // Act
+    const res = await request(app).delete('/api/v1/books/12');
+    // Assert
+    expect(res.statusCode).toEqual(404);
   });
 });

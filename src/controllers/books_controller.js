@@ -21,8 +21,7 @@ const saveBook = async (req, res) => {
   try {
     const book = await bookService.saveBook(bookToBeSaved);
     res.status(201).json(book);
-  }
-  catch(error) {
+  } catch (error) {
     res.status(400).json({message: error.message});
   }
 };
@@ -31,22 +30,27 @@ const saveBook = async (req, res) => {
 const updateBook = async (req, res) => {
   const bookUpdateData = req.body;
   const bookId = req.params.bookId;
-  const book = await bookService.updateBook(bookId, bookUpdateData);
-  res.status(200).json(book);
+  try {
+    const book = await bookService.updateBook(bookId, bookUpdateData);
+    res.json(book).status(200);
+  } catch (error) {
+    res.status(404).json({message: error.message});
+  }
 };
 
 
-//User story 5 - delete book by Id 
-
-
+// User story 5 - delete book by Id 
 
 const deleteBook = async (req, res) => {
   const bookId = req.params.bookId;
   const book = await bookService.deleteBook(Number(bookId));
-  res.status(200).json(book)
+  console.log(book)
+  if (book) {
+    res.json(book).status(200);
+  } else {
+    res.status(404).json('Not found');
+  }
 };
-
-
 
 module.exports = {
   getBooks,
